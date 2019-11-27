@@ -1,26 +1,26 @@
 <template>
-    <div class="notFound">
-        <h1>
-            <span class="infinite"><i class="iconfont el-icon-ali-ku"></i></span>
-        </h1>
-        <p>嗨呀~你访问的页面不存在</p>
-        <h3>
-            <a href="javascript:" @click="back"><i class="el-icon-ali-Left-"></i>返回</a>
-            <a href="/"><i class="el-icon-ali-home"></i>网站首页</a>
-        </h3>
-        <h4>Tips：您可能输入了错误的网址，或者该网页已删除或移动</h4>
-    </div>
+  <div class="notFound">
+    <h1>
+      <span class="infinite"><i class="iconfont el-icon-ali-ku" /></span>
+    </h1>
+    <p>嗨呀~你访问的页面不存在</p>
+    <h3>
+      <a href="javascript:" @click="back"><i class="el-icon-ali-Left-" />返回</a>
+      <a href="/"><i class="el-icon-ali-home" />网站首页</a>
+    </h3>
+    <h4>Tips：您可能输入了错误的网址，或者该网页已删除或移动</h4>
+  </div>
 </template>
 
 <script>
-  export default {
-    name: "notFound",
-    methods: {
-      back() {
-        this.$router.go(-1)
-      }
+export default {
+  name: 'NotFound',
+  methods: {
+    back() {
+      this.$router.go(-1)
     }
   }
+}
 </script>
 
 <style scoped lang="stylus">

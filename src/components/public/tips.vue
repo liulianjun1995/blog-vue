@@ -1,50 +1,50 @@
 <template>
-    <div class="blog-tips">
-        <i class="iconfont el-icon-ali-volume-up"></i>
-        <div class="tips-content">
-            <template v-for="(item, index) in tips">
-                <transition name="el-fade-in">
-                    <span class="tip transition-box" v-show="item.show" style="display: block" :style="{color: item.color}">{{ item.title }}</span>
-                </transition>
-            </template>
-        </div>
+  <div class="blog-tips">
+    <i class="iconfont el-icon-ali-volume-up" />
+    <div class="tips-content">
+      <template v-for="(item, index) in tips">
+        <transition name="el-fade-in">
+          <span v-show="item.show" class="tip transition-box" style="display: block" :style="{color: item.color}">{{ item.title }}</span>
+        </transition>
+      </template>
     </div>
+  </div>
 </template>
 
 <script>
-  export default {
-    name: "tips",
-    data() {
-      return {
-        tips: [],
-      }
-    },
-    methods: {
-      initTips() {
-        let n = 0;
-        setInterval( () => {
-          n++;
-          this.tips.forEach( (v, i) => {
-            n >= this.tips.length && (n = 0);
-            v.show = i === n;
-          })
-        }, 3000)
-      },
-      fetchData() {
-        let _this = this;
-        _this.api.getNoticeList().then((res) => {
-          if (res.code) {
-            _this.tips = res.data;
-          }
+export default {
+  name: 'Tips',
+  data() {
+    return {
+      tips: []
+    }
+  },
+  mounted() {
+    const _this = this
+    _this.initTips()
+    _this.fetchData()
+  },
+  methods: {
+    initTips() {
+      let n = 0
+      setInterval(() => {
+        n++
+        this.tips.forEach((v, i) => {
+          n >= this.tips.length && (n = 0)
+          v.show = i === n
         })
-      }
+      }, 3000)
     },
-    mounted() {
-      let _this = this;
-      _this.initTips();
-      _this.fetchData()
-    },
+    fetchData() {
+      const _this = this
+      _this.api.getNoticeList().then((res) => {
+        if (res.code) {
+          _this.tips = res.data
+        }
+      })
+    }
   }
+}
 </script>
 
 <style scoped lang="stylus">

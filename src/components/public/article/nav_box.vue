@@ -1,37 +1,37 @@
 <template>
-    <div class="nav-box" >
-        <div class="box-title">
-            分类导航
-        </div>
-        <template v-for="item in $store.state.menus">
-            <router-link :to="item.router">{{ item.title }}</router-link>
-        </template>
+  <div class="nav-box">
+    <div class="box-title">
+      分类导航
     </div>
+    <template v-for="item in $store.state.menus">
+      <router-link :to="item.router">{{ item.title }}</router-link>
+    </template>
+  </div>
 </template>
 
 <script>
-  export default {
-    name: "nav_box",
-    data() {
-      return {
-        menus: []
-      }
-    },
-    methods: {
-      fetchData() {
-        let _this = this;
-        _this.api.getCategoryList().then((res) => {
-          _this.menus = res.data
-        }).catch((error) => {
-          console.log(error);
-        })
-      }
-    },
-    mounted() {
-      let _this = this;
-      _this.fetchData()
+export default {
+  name: 'NavBox',
+  data() {
+    return {
+      menus: []
+    }
+  },
+  mounted() {
+    const _this = this
+    _this.fetchData()
+  },
+  methods: {
+    fetchData() {
+      const _this = this
+      _this.api.getCategoryList().then((res) => {
+        _this.menus = res.data
+      }).catch((error) => {
+        console.log(error)
+      })
     }
   }
+}
 </script>
 
 <style scoped lang="stylus">

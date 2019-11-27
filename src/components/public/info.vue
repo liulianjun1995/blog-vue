@@ -1,112 +1,112 @@
 <template>
-    <div class="info" v-scroll-reveal.reset>
-        <div class="info-avatar">
-            <img :src="info.avatar" :alt="info.nickname">
-        </div>
-        <div class="info-info">
-            <p class="info-nickname">{{ info.nickname }}</p>
-            <p class="info-introduce">{{ info.introduce }}</p>
-            <p class="info-location"><i class="iconfont el-icon-ali-locationicon"></i> {{ info.location }}</p>
-        </div>
-        <div class="info-contact">
-            <a href="#" title="QQ交流"><i class="iconfont el-icon-ali-qq"></i></a>
-            <a href="#" title="给我写信"><i class="iconfont el-icon-ali-email1"></i></a>
-            <a href="#" title="新浪微博"><i class="iconfont el-icon-ali-weibo1"></i></a>
-            <a href="#" title="GitHub"><i class="iconfont el-icon-ali-github"></i></a>
-        </div>
-        <div class="info-statistics">
-            <div class="item">
-                <span>{{article_count}}</span>
-                <p>博文</p>
-            </div>
-            <div class="item">
-                <span>0</span>
-                <p>细语</p>
-            </div>
-            <div class="item">
-                <span>{{comment_count}}</span>
-                <p>评论</p>
-            </div>
-            <div class="item">
-                <span>0</span>
-                <p>留言</p>
-            </div>
-        </div>
-        <div class="info-runtime">
-            博客已运行 <span class="runtime">{{runtime}}</span>
-        </div>
+  <div v-scroll-reveal.reset class="info">
+    <div class="info-avatar">
+      <img :src="info.avatar" :alt="info.nickname">
     </div>
+    <div class="info-info">
+      <p class="info-nickname">{{ info.nickname }}</p>
+      <p class="info-introduce">{{ info.introduce }}</p>
+      <p class="info-location"><i class="iconfont el-icon-ali-locationicon" /> {{ info.location }}</p>
+    </div>
+    <div class="info-contact">
+      <a href="#" title="QQ交流"><i class="iconfont el-icon-ali-qq" /></a>
+      <a href="#" title="给我写信"><i class="iconfont el-icon-ali-email1" /></a>
+      <a href="#" title="新浪微博"><i class="iconfont el-icon-ali-weibo1" /></a>
+      <a href="#" title="GitHub"><i class="iconfont el-icon-ali-github" /></a>
+    </div>
+    <div class="info-statistics">
+      <div class="item">
+        <span>{{ article_count }}</span>
+        <p>博文</p>
+      </div>
+      <div class="item">
+        <span>0</span>
+        <p>细语</p>
+      </div>
+      <div class="item">
+        <span>{{ comment_count }}</span>
+        <p>评论</p>
+      </div>
+      <div class="item">
+        <span>0</span>
+        <p>留言</p>
+      </div>
+    </div>
+    <div class="info-runtime">
+      博客已运行 <span class="runtime">{{ runtime }}</span>
+    </div>
+  </div>
 </template>
 
 <script>
-  export default {
-    name: "info",
-    props: {
-      article_count: {
-        type: Number
+export default {
+  name: 'Info',
+  props: {
+    articleCount: {
+      type: Number
+    },
+    commentCount: {
+      type: Number
+    }
+  },
+  data() {
+    return {
+      info: {
+        avatar: require('@/assets/img/avatar.jpg'),
+        nickname: '榴莲君',
+        introduce: '一枚90后程序员，PHP开发工程师',
+        location: '北京 - 朝阳'
       },
-      comment_count: {
-        type: Number
-      }
-    },
-    data() {
-      return {
-        info: {
-          avatar: require('@/assets/img/avatar.jpg'),
-          nickname: '榴莲君',
-          introduce: '一枚90后程序员，PHP开发工程师',
-          location: '北京 - 朝阳',
-        },
-        runtime: ''
-      }
-    },
-    methods: {
-      getWeather() {
+      runtime: ''
+    }
+  },
+  mounted() {
+    const _this = this
+    // _this.getLocation().then( _ => {
+    //   // _this.api.getWeather(returnCitySN['city'])
+    //   console.log(returnCitySN.cname);
+    // })
+    setInterval(function() {
+      _this.getRunTime()
+    }, 1000)
+  },
+  methods: {
+    getWeather() {
 
-      },
-      getLocation() {
-        return new Promise( resolve => {
-          var script = document.createElement('script');
-          script.src = 'http://pv.sohu.com/cityjson?ie=utf-8'
-          script.async = true
-          script.onload = script.onreadystatechange = function() {
-            if (!this.readyState || this.readyState === 'loaded' || this.readyState === 'complete') {
-              resolve()
-              script.onload = script.onreadystatechange = null
-            }
+    },
+    getLocation() {
+      return new Promise(resolve => {
+        var script = document.createElement('script')
+        script.src = 'http://pv.sohu.com/cityjson?ie=utf-8'
+        script.async = true
+        script.onload = script.onreadystatechange = function() {
+          if (!this.readyState || this.readyState === 'loaded' || this.readyState === 'complete') {
+            resolve()
+            script.onload = script.onreadystatechange = null
           }
-          document.getElementsByTagName("head")[0].appendChild(script)
-        })
-      },
-      getRunTime() {
-        let _this = this;
-
-        let start = new Date('2018-8-10');
-        let now = new Date().getTime();
-        let diff_time = now - start;
-        const px_d=1000*60*60*24;
-        const px_h=1000*60*60;
-        const px_m=1000*60;
-        const px_s=1000;
-        let d=Math.floor(diff_time/px_d);
-        let h=Math.floor((diff_time-d*px_d)/px_h);
-        let m=Math.floor((diff_time-d*px_d-h*px_h)/px_m);
-        let s=Math.floor((diff_time-d*px_d-h*px_h-m*px_m)/px_s);
-
-        _this.runtime = `${d}天 ${h}时 ${m}分 ${s}秒`;
-      }
+        }
+        document.getElementsByTagName('head')[0].appendChild(script)
+      })
     },
-    mounted() {
-      let _this = this;
-      // _this.getLocation().then( _ => {
-      //   // _this.api.getWeather(returnCitySN['city'])
-      //   console.log(returnCitySN.cname);
-      // })
-      setInterval(function () {
-        _this.getRunTime();
-      },1000)
+    getRunTime() {
+      const _this = this
+
+      const start = new Date('2018-8-10')
+      const now = new Date().getTime()
+      const diff_time = now - start
+      const px_d = 1000 * 60 * 60 * 24
+      const px_h = 1000 * 60 * 60
+      const px_m = 1000 * 60
+      const px_s = 1000
+      const d = Math.floor(diff_time / px_d)
+      const h = Math.floor((diff_time - d * px_d) / px_h)
+      const m = Math.floor((diff_time - d * px_d - h * px_h) / px_m)
+      const s = Math.floor((diff_time - d * px_d - h * px_h - m * px_m) / px_s)
+
+      _this.runtime = `${d}天 ${h}时 ${m}分 ${s}秒`
     }
   }
+}
 </script>
 
 <style scoped lang="stylus">

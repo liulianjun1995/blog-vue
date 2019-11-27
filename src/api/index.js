@@ -1,10 +1,10 @@
-import axios from "./axios";
+import axios from './axios'
 
-let instance = axios()
+const instance = axios()
 
 export default {
   get(url, params, headers) {
-    let options = {}
+    const options = {}
 
     if (params) {
       options.params = params
@@ -15,7 +15,7 @@ export default {
     return instance.get(url, options)
   },
   post(url, params, headers, data) {
-    let options = {}
+    const options = {}
 
     if (params) {
       options.params = params
@@ -26,7 +26,7 @@ export default {
     return instance.post(url, data, options)
   },
   put(url, params, headers) {
-    let options = {}
+    const options = {}
 
     if (headers) {
       options.headers = headers
@@ -34,7 +34,7 @@ export default {
     return instance.put(url, params, options)
   },
   delete(url, params, headers) {
-    let options = {}
+    const options = {}
 
     if (params) {
       options.params = params

@@ -1,56 +1,57 @@
 <template>
-    <div class="timeline-card"  v-scroll-reveal.reset>
-        <p class="card-title">
-            <i class="iconfont el-icon-ali-locationicon"></i>
-            一路走来
-        </p>
-        <el-timeline>
-            <el-timeline-item
-                    v-for="(activity, index) in activities"
-                    :key="index"
-                    :icon="activity.icon"
-                    :type="activity.type"
-                    :color="activity.color"
-                    :size="activity.size"
-                    placement="top"
-                    :timestamp="activity.timestamp">
-                {{activity.content}}
-            </el-timeline-item>
-        </el-timeline>
-    </div>
+  <div v-scroll-reveal.reset class="timeline-card">
+    <p class="card-title">
+      <i class="iconfont el-icon-ali-locationicon" />
+      一路走来
+    </p>
+    <el-timeline>
+      <el-timeline-item
+        v-for="(activity, index) in activities"
+        :key="index"
+        :icon="activity.icon"
+        :type="activity.type"
+        :color="activity.color"
+        :size="activity.size"
+        placement="top"
+        :timestamp="activity.timestamp"
+      >
+        {{ activity.content }}
+      </el-timeline-item>
+    </el-timeline>
+  </div>
 </template>
 
 <script>
-  export default {
-    name: "timeline_card",
-    data() {
-      return {
-        activities: [
-          {
-            content: '新增博文配乐功能。',
-            timestamp: '2018-04-12 20:46',
-            type: 'primary',
-            icon: 'iconfont el-icon-ali-clock1',
-          },
-          {
-            content: '不落阁2.0项目启动',
-            timestamp: '2018-04-03 20:46',
-            icon: 'iconfont el-icon-ali-clock1',
-          },
-          {
-            content: '不落阁1.0基本正式上线！',
-            timestamp: '2018-04-03 20:46',
-            icon: 'iconfont el-icon-ali-clock1',
-          },
-          {
-            content: '不落阁1.0项目启动',
-            timestamp: '2018-04-03 20:46',
-            icon: 'iconfont el-icon-ali-yuandian',
-          }
-        ]
-      };
+export default {
+  name: 'TimelineCard',
+  data() {
+    return {
+      activities: [
+        {
+          content: '新增博文配乐功能。',
+          timestamp: '2018-04-12 20:46',
+          type: 'primary',
+          icon: 'iconfont el-icon-ali-clock1'
+        },
+        {
+          content: '不落阁2.0项目启动',
+          timestamp: '2018-04-03 20:46',
+          icon: 'iconfont el-icon-ali-clock1'
+        },
+        {
+          content: '不落阁1.0基本正式上线！',
+          timestamp: '2018-04-03 20:46',
+          icon: 'iconfont el-icon-ali-clock1'
+        },
+        {
+          content: '不落阁1.0项目启动',
+          timestamp: '2018-04-03 20:46',
+          icon: 'iconfont el-icon-ali-yuandian'
+        }
+      ]
     }
   }
+}
 </script>
 <style lang="stylus">
     .el-timeline

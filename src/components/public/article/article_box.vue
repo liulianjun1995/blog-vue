@@ -1,109 +1,109 @@
 <template>
-    <div class="article-box">
-        <p class="box-title">
-            <i class="iconfont" :class="icon"></i>
-            {{ title }}
-        </p>
-        <div class="article" v-scroll-reveal.reset v-for="(item, index) in articles" :key="index">
-            <div v-show="item.is_recommend" class="flag flag-left">推荐</div>
-            <div class="article-left">
-                <img v-lazy="item.cover" :src="item.cover" :alt="item.title" draggable="false" preview="1" :preview-text="item.title">
-            </div>
-            <div class="article-right">
-                <div class="article-title">
-                    <router-link class="read" :to="'/article/' + item.token" :title="item.title">{{ item.title }}</router-link>
-                </div>
-                <div class="article-abstract" :title="item.abstract">
-                    {{ item.abstract }}
-                </div>
-                <div class="article-footer">
-                    <span class="article-footer-icon category" v-if="item.category">
-                        <el-tooltip class="item" effect="dark" content="分类" placement="bottom">
-                            <i class="el-icon-menu"></i>
-                        </el-tooltip>
-                        <router-link class="tag-name" :to="'/category/' + item.category.title" :title="item.category.title">{{ item.category.title }}</router-link>
-                    </span>
-                    <span class="article-footer-icon tags" v-if="item.tags.length">
-                        <el-tooltip class="item" effect="dark" content="标签" placement="bottom">
-                            <i class="iconfont el-icon-ali-tag1"></i>
-                        </el-tooltip>
-                        <template v-for="tag in item.tags">
-                            <router-link class="tag-name" :to="'/tag/' + tag.title" :title="tag.title">{{ tag.title }}</router-link>
-                        </template>
-                    </span>
-                    <el-tooltip class="item" effect="dark" content="发布时间" placement="bottom">
-                        <span class="article-footer-icon">
-                          <i class="iconfont el-icon-ali-clock"></i>
-                          {{ item.create_time }}
-                        </span>
-                    </el-tooltip>
-                    <el-tooltip class="item" effect="dark" content="浏览" placement="bottom">
-                         <span class="article-footer-icon">
-                          <i class="iconfont el-icon-ali-read"></i>
-                          {{ item.view_count }}
-                        </span>
-                    </el-tooltip>
-                    <el-tooltip class="item" effect="dark" content="评论" placement="bottom">
-                         <span class="article-footer-icon">
-                          <i class="iconfont el-icon-ali-message1"></i>
-                          {{ item.comments_count}}
-                        </span>
-                    </el-tooltip>
-                    <el-tooltip class="item" effect="dark" content="点赞" placement="bottom">
-                         <span class="article-footer-icon">
-                          <i class="iconfont el-icon-ali-zan"></i>
-                          {{ item.praises_count || 0 }}
-                        </span>
-                    </el-tooltip>
-                    <router-link class="read" :to="'/article/' + item.token" title="阅读全文">阅读全文</router-link>
-                </div>
-            </div>
+  <div class="article-box">
+    <p class="box-title">
+      <i class="iconfont" :class="icon" />
+      {{ title }}
+    </p>
+    <div v-for="(item, index) in articles" :key="index" v-scroll-reveal.reset class="article">
+      <div v-show="item.is_recommend" class="flag flag-left">推荐</div>
+      <div class="article-left">
+        <img v-lazy="item.cover" :src="item.cover" :alt="item.title" draggable="false" preview="1" :preview-text="item.title">
+      </div>
+      <div class="article-right">
+        <div class="article-title">
+          <router-link class="read" :to="'/article/' + item.token" :title="item.title">{{ item.title }}</router-link>
         </div>
-        <div class="empty-box" v-show="show">
-            <p><i class="iconfont el-icon-ali-cry"></i></p>
-            <p>暂时没有任何数据</p>
+        <div class="article-abstract" :title="item.abstract">
+          {{ item.abstract }}
         </div>
+        <div class="article-footer">
+          <span v-if="item.category" class="article-footer-icon category">
+            <el-tooltip class="item" effect="dark" content="分类" placement="bottom">
+              <i class="el-icon-menu" />
+            </el-tooltip>
+            <router-link class="tag-name" :to="'/category/' + item.category.title" :title="item.category.title">{{ item.category.title }}</router-link>
+          </span>
+          <span v-if="item.tags.length" class="article-footer-icon tags">
+            <el-tooltip class="item" effect="dark" content="标签" placement="bottom">
+              <i class="iconfont el-icon-ali-tag1" />
+            </el-tooltip>
+            <template v-for="tag in item.tags">
+              <router-link class="tag-name" :to="'/tag/' + tag.title" :title="tag.title">{{ tag.title }}</router-link>
+            </template>
+          </span>
+          <el-tooltip class="item" effect="dark" content="发布时间" placement="bottom">
+            <span class="article-footer-icon">
+              <i class="iconfont el-icon-ali-clock" />
+              {{ item.create_time }}
+            </span>
+          </el-tooltip>
+          <el-tooltip class="item" effect="dark" content="浏览" placement="bottom">
+            <span class="article-footer-icon">
+              <i class="iconfont el-icon-ali-read" />
+              {{ item.view_count }}
+            </span>
+          </el-tooltip>
+          <el-tooltip class="item" effect="dark" content="评论" placement="bottom">
+            <span class="article-footer-icon">
+              <i class="iconfont el-icon-ali-message1" />
+              {{ item.comments_count }}
+            </span>
+          </el-tooltip>
+          <el-tooltip class="item" effect="dark" content="点赞" placement="bottom">
+            <span class="article-footer-icon">
+              <i class="iconfont el-icon-ali-zan" />
+              {{ item.praises_count || 0 }}
+            </span>
+          </el-tooltip>
+          <router-link class="read" :to="'/article/' + item.token" title="阅读全文">阅读全文</router-link>
+        </div>
+      </div>
     </div>
+    <div v-show="show" class="empty-box">
+      <p><i class="iconfont el-icon-ali-cry" /></p>
+      <p>暂时没有任何数据</p>
+    </div>
+  </div>
 </template>
 
 <script>
-  export default {
-    name: "article_box",
-    props: {
-      articles: {
-        type: Array|Object,
-        required: true
-      },
-      icon: {
-        type: String,
-        required: true
-      },
-      title: {
-        type: String,
-        required: true
+export default {
+  name: 'ArticleBox',
+  filters: {
+    ellipsis(value, length) {
+      if (!value) return ''
+      if (value.length > length) {
+        return value.slice(0, length) + '...'
       }
+      return value
+    }
+  },
+  props: {
+    articles: {
+      type: Array | Object,
+      required: true
     },
-    data() {
-      return {
-        show: false,
-        loading: true
-      }
+    icon: {
+      type: String,
+      required: true
     },
-    filters: {
-      ellipsis(value, length) {
-        if (!value) return ''
-        if (value.length > length) {
-          return value.slice(0, length) + '...'
-        }
-        return value
-      }
-    },
-    watch: {
-      articles() {
-          this.show = this.articles.length === 0
-      }
+    title: {
+      type: String,
+      required: true
+    }
+  },
+  data() {
+    return {
+      show: false,
+      loading: true
+    }
+  },
+  watch: {
+    articles() {
+      this.show = this.articles.length === 0
     }
   }
+}
 </script>
 
 <style scoped lang="stylus">

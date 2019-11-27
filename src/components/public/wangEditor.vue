@@ -1,33 +1,33 @@
 <template>
-    <div class="wangEditor">
-        <vue-wangeditor id="editor" :options="options" v-model="content" :init-content="initContent" :disable="disable" @get-text="getText"></vue-wangeditor>
-    </div>
+  <div class="wangEditor">
+    <vue-wangeditor id="editor" v-model="content" :options="options" :init-content="initContent" :disable="disable" @get-text="getText" />
+  </div>
 </template>
 
 <script>
-  export default {
-    name: "wangEditor",
-    props: {
-      disable: {
-        type: Boolean
-      },
-      options: {
-        type: Object
-      }
+export default {
+  name: 'WangEditor',
+  props: {
+    disable: {
+      type: Boolean
     },
-    data() {
-      return {
-        content: '', // 包含html标签
-        initContent: '',
-        id: new Date()
-      }
-    },
-    methods: {
-      getText () {
-        return this.content;
-      },
+    options: {
+      type: Object
+    }
+  },
+  data() {
+    return {
+      content: '', // 包含html标签
+      initContent: '',
+      id: new Date()
+    }
+  },
+  methods: {
+    getText() {
+      return this.content
     }
   }
+}
 </script>
 
 <style scoped lang="stylus">

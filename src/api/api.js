@@ -1,6 +1,6 @@
-import axios from "./index";
+import axios from './index'
 // 本地代理
-let baseUrl = '/api'
+const baseUrl = '/api'
 // switch (process.env.NODE_ENV) {
 //   case 'dev':
 //     break
@@ -61,6 +61,6 @@ export default {
   },
   getWeather(location, key = 'f3f851722b2c4ead86dca63283f5f352') {
     return axios.get(`/weather?location=${location}&key=${key}`)
-  },
+  }
 }
 

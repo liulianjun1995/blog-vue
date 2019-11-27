@@ -1,38 +1,38 @@
 <template>
-    <div class="article-card">
-        <p class="card-title">
-            <i class="iconfont" :class="icon"></i>
-            {{ title }}
-        </p>
-        <ul class="card-list">
-            <template v-for="(item, index) in articles">
-                <li>
-                    <span class="card-badge" :class="index > 2 ? 'card-badge-blue' : ''">{{ index + 1 }}</span>
-                    <router-link :to="'/article/' + item.token" :title="item.title">{{ item.title }}</router-link>
-                </li>
-            </template>
-        </ul>
-    </div>
+  <div class="article-card">
+    <p class="card-title">
+      <i class="iconfont" :class="icon" />
+      {{ title }}
+    </p>
+    <ul class="card-list">
+      <template v-for="(item, index) in articles">
+        <li>
+          <span class="card-badge" :class="index > 2 ? 'card-badge-blue' : ''">{{ index + 1 }}</span>
+          <router-link :to="'/article/' + item.token" :title="item.title">{{ item.title }}</router-link>
+        </li>
+      </template>
+    </ul>
+  </div>
 </template>
 
 <script>
-  export default {
-    name: "article_card",
-    props: {
-      articles: {
-        type: Array|Object,
-        required: true
-      },
-      icon: {
-        type: String,
-        required: true
-      },
-      title: {
-        type: String,
-        required: true
-      }
+export default {
+  name: 'ArticleCard',
+  props: {
+    articles: {
+      type: Array | Object,
+      required: true
+    },
+    icon: {
+      type: String,
+      required: true
+    },
+    title: {
+      type: String,
+      required: true
     }
   }
+}
 </script>
 
 <style scoped lang="stylus">

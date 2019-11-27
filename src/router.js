@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
-import Article from "./views/Article";
-import Category from "./views/Article";
-import ArticleInfo from "./views/ArticleInfo";
-import Message from "./views/Message";
-import notFound from "./components/public/notFound";
+import Article from './views/Article'
+import Category from './views/Article'
+import ArticleInfo from './views/ArticleInfo'
+import Message from './views/Message'
+import notFound from './components/public/notFound'
 
 Vue.use(Router)
 
@@ -24,7 +24,7 @@ export default new Router({
       component: Article,
       meta: {
         title: '学海无涯',
-        activeIndex: 'all',
+        activeIndex: 'all'
       }
     },
     {
@@ -32,7 +32,7 @@ export default new Router({
       name: 'category',
       component: Category,
       meta: {
-        activeIndex: 'all',
+        activeIndex: 'all'
       }
     },
     {
@@ -40,7 +40,7 @@ export default new Router({
       name: 'tag',
       component: Category,
       meta: {
-        activeIndex: 'all',
+        activeIndex: 'all'
       }
     },
     {
@@ -48,7 +48,7 @@ export default new Router({
       name: 'article-info',
       component: ArticleInfo,
       meta: {
-        activeIndex: 'all',
+        activeIndex: 'all'
       }
     },
     {
@@ -56,10 +56,10 @@ export default new Router({
       name: 'message',
       component: Message,
       meta: {
-        activeIndex: '/message',
+        activeIndex: '/message'
       }
     },
-    {path: '*',component: notFound},
+    { path: '*', component: notFound }
   ],
   scrollBehavior: (to, from, savedPosition) => {
     if (to.hash) {

@@ -1,335 +1,334 @@
 <template>
-    <div class="article-info">
-        <notFound v-show="show"/>
-        <div v-show="showArticle">
-            <el-row>
-                <el-col :span="24">
-                    <breadcrumb :breadcrumb="breadcrumb"/>
-                </el-col>
-            </el-row>
-            <el-row :gutter="10">
-                <el-col :xs="24" :sm="24" :md="16" :lg="16" :xl="16">
-                    <div class="left-box">
-                        <div class="article-content">
-                            <div class="article-content-tool">
-                                <div>
-                                    <el-tooltip class="item" effect="dark" content="发布时间" placement="bottom">
-                                        <el-button size="mini">
-                                            {{ article_info.created_at }}
-                                        </el-button>
-                                    </el-tooltip>
-                                    <el-tooltip class="item" effect="dark" content="浏览" placement="bottom">
-                                        <el-button size="mini">
-                                            <i class="iconfont el-icon-ali-eye"></i>&nbsp;{{ article_info.view_count }}
-                                        </el-button>
-                                    </el-tooltip>
-                                    <el-tooltip class="item" effect="dark" content="评论" placement="bottom">
-                                        <el-button size="mini">
-                                            <i class="iconfont el-icon-ali-message2"></i>&nbsp;0
-                                        </el-button>
-                                    </el-tooltip>
-                                </div>
-                            </div>
-                            <div class="article-content-title">
-                                {{ article_info.title }}
-                            </div>
-                            <div class="article-content-abstract">
-                                <span class="abstract-badge">摘要</span>
-                                <span class="abstract-content">
-                                {{ article_info.abstract }}
-                            </span>
-                            </div>
-                            <div class="article-content-text">
+  <div class="article-info">
+    <notFound v-show="show" />
+    <div v-show="showArticle">
+      <el-row>
+        <el-col :span="24">
+          <breadcrumb :breadcrumb="breadcrumb" />
+        </el-col>
+      </el-row>
+      <el-row :gutter="10">
+        <el-col :xs="24" :sm="24" :md="16" :lg="16" :xl="16">
+          <div class="left-box">
+            <div class="article-content">
+              <div class="article-content-tool">
+                <div>
+                  <el-tooltip class="item" effect="dark" content="发布时间" placement="bottom">
+                    <el-button size="mini">
+                      {{ article_info.created_at }}
+                    </el-button>
+                  </el-tooltip>
+                  <el-tooltip class="item" effect="dark" content="浏览" placement="bottom">
+                    <el-button size="mini">
+                      <i class="iconfont el-icon-ali-eye" />&nbsp;{{ article_info.view_count }}
+                    </el-button>
+                  </el-tooltip>
+                  <el-tooltip class="item" effect="dark" content="评论" placement="bottom">
+                    <el-button size="mini">
+                      <i class="iconfont el-icon-ali-message2" />&nbsp;0
+                    </el-button>
+                  </el-tooltip>
+                </div>
+              </div>
+              <div class="article-content-title">
+                {{ article_info.title }}
+              </div>
+              <div class="article-content-abstract">
+                <span class="abstract-badge">摘要</span>
+                <span class="abstract-content">
+                  {{ article_info.abstract }}
+                </span>
+              </div>
+              <div class="article-content-text">
 
-                                <div class="article-detail-content">
-                                    <vue-marked :value="article_info.content"></vue-marked>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="article-component">
-                            <div class="component-box">
-                                <a href="javascript:" class="component praise" @click="praise">
-                                    <i class="iconfont el-icon-ali-zan"></i>
-                                    点赞（{{article_info.praises_count}}）
-                                </a>
-                                <a href="javascript:" class="component reward">
-                                    赏
-                                </a>
-                                <a href="javascript:" class="component share" @click="share">
-                                    <i class="iconfont el-icon-ali-share"></i>
-                                    分享（33）
-                                </a>
-                            </div>
-                        </div>
+                <div class="article-detail-content">
+                  <vue-marked :value="article_info.content" />
+                </div>
+              </div>
+            </div>
+            <div class="article-component">
+              <div class="component-box">
+                <a href="javascript:" class="component praise" @click="praise">
+                  <i class="iconfont el-icon-ali-zan" />
+                  点赞（{{ article_info.praises_count }}）
+                </a>
+                <a href="javascript:" class="component reward">
+                  赏
+                </a>
+                <a href="javascript:" class="component share" @click="share">
+                  <i class="iconfont el-icon-ali-share" />
+                  分享（33）
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="editor-box">
+            <el-divider content-position="left">来说两句吧</el-divider>
+            <wangEditor ref="wangEditor" :disable="disable" :options="editor_options" />
+            <el-button size="small" type="primary" @click="comment">提交评论</el-button>
+          </div>
+          <div class="comment-card">
+            <div class="card-title">最新评论</div>
+            <ul v-if="article_info.comments.length" class="comment-list">
+              <li v-for="item in article_info.comments">
+                <div class="comment-parent">
+                  <a :id="'comment-' + item.token" />
+                  <img class="parent-avatar" :src="item.user.avatar" alt="">
+                  <div class="info">
+                    <span class="username">{{ item.user.nickname }}</span>
+                  </div>
+                  <div class="content" v-html="item.content" />
+                  <p class="content-footer">
+                    <span class="time">{{ item.created_at }}</span>
+                    <a href="javascript:" class="btn-reply" @click="showReplay(item)">回复</a>
+                  </p>
+                </div>
+                <template v-if="item.children">
+                  <hr>
+                  <div v-for="child in item.children" class="comment-child">
+                    <a :id="'comment-' + child.token" />
+                    <img class="child-avatar" :src="child.user.avatar" alt="">
+                    <div class="info">
+                      <span class="username">{{ child.user.nickname }}</span>
+                      <span class="replay"> 回复 </span>
+                      <span class="username">{{ item.user.nickname }}</span>
+                      <span class="replay-content">
+                        {{ child.content }}
+                      </span>
                     </div>
-                    <div class="editor-box">
-                        <el-divider content-position="left">来说两句吧</el-divider>
-                        <wangEditor ref="wangEditor" :disable="disable" :options="editor_options"/>
-                        <el-button size="small" type="primary" @click="comment">提交评论</el-button>
-                    </div>
-                    <div class="comment-card">
-                        <div class="card-title">最新评论</div>
-                        <ul class="comment-list" v-if="article_info.comments.length">
-                            <li v-for="item in article_info.comments">
-                                <div class="comment-parent">
-                                    <a :id="'comment-' + item.token"></a>
-                                    <img class="parent-avatar" :src="item.user.avatar" alt="">
-                                    <div class="info">
-                                        <span class="username">{{item.user.nickname}}</span>
-                                    </div>
-                                    <div class="content" v-html="item.content">
-                                    </div>
-                                    <p class="content-footer">
-                                        <span class="time">{{item.created_at}}</span>
-                                        <a href="javascript:" class="btn-reply" @click="showReplay(item)">回复</a>
-                                    </p>
-                                </div>
-                                <template v-if="item.children">
-                                    <hr>
-                                    <div class="comment-child" v-for="child in item.children">
-                                        <a :id="'comment-' + child.token"></a>
-                                        <img class="child-avatar" :src="child.user.avatar" alt="">
-                                        <div class="info">
-                                            <span class="username">{{ child.user.nickname }}</span>
-                                            <span class="replay"> 回复 </span>
-                                            <span class="username">{{ item.user.nickname }}</span>
-                                            <span class="replay-content">
-                                                {{child.content}}
-                                            </span>
-                                        </div>
-                                        <p class="content-footer">
-                                            <span class="time">{{ child.created_at }}</span>
-                                            <a href="javascript:" class="btn-reply" @click="showReplay(child)">回复</a>
-                                        </p>
-                                    </div>
-                                </template>
-                                <div class="reply-container" v-show="item.token === reply.parent || item.token === reply.root">
-                                    <textarea :placeholder="replyPlaceholder" v-model="reply.content"></textarea>
-                                    <el-button type="primary" size="mini" @click="replayComment">提交</el-button>
-                                </div>
-                            </li>
-                        </ul>
-                        <div class="comment-empty" v-else>
-                            <p><i class="iconfont el-icon-ali-book"></i></p>
-                            <p>暂无评论，大侠不妨来一发？</p>
-                        </div>
-                    </div>
-                </el-col>
-                <el-col :xs="24" :sm="24" :md="8" :lg="8" :xl="8">
-                    <el-row>
-                        <el-col class="box" :xs="24" :sm="12" :md="24" :lg="24" :xl="24">
-                            <nav_box/>
-                        </el-col>
-                        <el-col class="box" :xs="24" :sm="12" :md="24" :lg="24" :xl="24">
-                            <article_card :articles="hots" :icon="'el-icon-ali-huomiao'" :title="'热文排行'"/>
-                        </el-col>
-                        <el-col class="box" :xs="24" :sm="12" :md="24" :lg="24" :xl="24">
-                            <article_card :articles="recommends" :icon="'el-icon-ali-zan'" :title="'作者推荐'"/>
-                        </el-col>
-                    </el-row>
-                </el-col>
-            </el-row>
-        </div>
+                    <p class="content-footer">
+                      <span class="time">{{ child.created_at }}</span>
+                      <a href="javascript:" class="btn-reply" @click="showReplay(child)">回复</a>
+                    </p>
+                  </div>
+                </template>
+                <div v-show="item.token === reply.parent || item.token === reply.root" class="reply-container">
+                  <textarea v-model="reply.content" :placeholder="replyPlaceholder" />
+                  <el-button type="primary" size="mini" @click="replayComment">提交</el-button>
+                </div>
+              </li>
+            </ul>
+            <div v-else class="comment-empty">
+              <p><i class="iconfont el-icon-ali-book" /></p>
+              <p>暂无评论，大侠不妨来一发？</p>
+            </div>
+          </div>
+        </el-col>
+        <el-col :xs="24" :sm="24" :md="8" :lg="8" :xl="8">
+          <el-row>
+            <el-col class="box" :xs="24" :sm="12" :md="24" :lg="24" :xl="24">
+              <nav_box />
+            </el-col>
+            <el-col class="box" :xs="24" :sm="12" :md="24" :lg="24" :xl="24">
+              <article_card :articles="hots" :icon="'el-icon-ali-huomiao'" :title="'热文排行'" />
+            </el-col>
+            <el-col class="box" :xs="24" :sm="12" :md="24" :lg="24" :xl="24">
+              <article_card :articles="recommends" :icon="'el-icon-ali-zan'" :title="'作者推荐'" />
+            </el-col>
+          </el-row>
+        </el-col>
+      </el-row>
     </div>
+  </div>
 </template>
 
 <script>
-  import article_card from "@/components/public/article/article_card";
-  import breadcrumb from "../components/public/article/breadcrumb";
-  import nav_box from "../components/public/article/nav_box";
+import article_card from '@/components/public/article/article_card'
+import breadcrumb from '../components/public/article/breadcrumb'
+import nav_box from '../components/public/article/nav_box'
 
-  import wangEditor from "../components/public/wangEditor";
+import wangEditor from '../components/public/wangEditor'
 
-  import emotions from "../config/emotions";
+import emotions from '../config/emotions'
 
-  import notFound from "../components/public/notFound";
+import notFound from '../components/public/notFound'
 
-  export default {
-    name: "ArticleInfo",
-    components: {
-      article_card,
-      breadcrumb,
-      nav_box,
-      wangEditor,
-      notFound
-    },
-    data() {
-      return {
-        site_title: process.env.VUE_APP_SITE_TITLE,
-        articles: [],
-        recommends: [],
-        hots: [],
-        article_info: {
-          comments: []
-        },
-        editor: null,
-        breadcrumb: [],
-        disable: false,
-        editor_options: {
-          menus: [
-            'bold',  // 粗体
-            'italic',  // 斜体
-            'underline',  // 下划线
-            'redo',  // 重复
-            'undo',
-            // 一键清空编辑器
-            'clearAll',
-            // 插入带类名的代码
-            'insertCode',
-            'emoticon',
-            'justify',
-            'link',
-          ],
-          pasteFilterStyle: true,  // 打开/关闭粘贴样式的过滤,
-          emotions: emotions
-        },
-        show: false,
-        showArticle: false,
-        reply: {},
-        replyPlaceholder: '',
-      }
-    },
-    methods: {
-      fetchData() {
-        let _this = this;
-        _this.api.getPostInfo(_this.$route.params.id).then( (res) => {
-          if (res.code) {
-            _this.article_info = res.data;
-            _this.article_info.comments = Object.keys(_this.article_info.comments).map(item => _this.article_info.comments[item]);
-            _this.breadcrumb = [
-              {
-                title: '学海无涯',
-                router: '/articles'
-              },
-              {
-                title: _this.article_info.category.title,
-                router: '/category/' + _this.article_info.category.title
-              },
-              {
-                title: _this.article_info.title
-              }
-            ]
-            document.title = _this.article_info.title + ' - ' + process.env.VUE_APP_SITE_TITLE;
-            _this.showArticle = true;
-          } else {
-            _this.show = true
-          }
-        }).catch( (error) => {
-          console.log(error);
-        })
+export default {
+  name: 'ArticleInfo',
+  components: {
+    article_card,
+    breadcrumb,
+    nav_box,
+    wangEditor,
+    notFound
+  },
+  data() {
+    return {
+      site_title: process.env.VUE_APP_SITE_TITLE,
+      articles: [],
+      recommends: [],
+      hots: [],
+      article_info: {
+        comments: []
       },
-      getRecommendPostList() {
-        let _this = this;
-        _this.api.getRecommendPostList().then( (res) => {
-          if (res.code) {
-            _this.recommends = res.data;
-          }
-        }).catch( (error) => {
-          console.log(error);
-        });
+      editor: null,
+      breadcrumb: [],
+      disable: false,
+      editor_options: {
+        menus: [
+          'bold', // 粗体
+          'italic', // 斜体
+          'underline', // 下划线
+          'redo', // 重复
+          'undo',
+          // 一键清空编辑器
+          'clearAll',
+          // 插入带类名的代码
+          'insertCode',
+          'emoticon',
+          'justify',
+          'link'
+        ],
+        pasteFilterStyle: true, // 打开/关闭粘贴样式的过滤,
+        emotions: emotions
       },
-      getHotPostList() {
-        let _this = this;
-        _this.api.getHotPostList().then( (res) => {
-          if (res.code) {
-            _this.hots = res.data;
-          }
-        }).catch( (error) => {
-          console.log(error);
-        });
-      },
-      comment() {
-        let _this = this;
-        if (!_this.$store.state.login) {
-          _this.$layer.msg('请先登录');
-          return false;
+      show: false,
+      showArticle: false,
+      reply: {},
+      replyPlaceholder: ''
+    }
+  },
+  watch: {
+    $route: 'fetchData'
+  },
+  mounted() {
+    const _this = this
+    _this.fetchData()
+    _this.getRecommendPostList()
+    _this.getHotPostList()
+  },
+  methods: {
+    fetchData() {
+      const _this = this
+      _this.api.getPostInfo(_this.$route.params.id).then((res) => {
+        if (res.code) {
+          _this.article_info = res.data
+          _this.article_info.comments = Object.keys(_this.article_info.comments).map(item => _this.article_info.comments[item])
+          _this.breadcrumb = [
+            {
+              title: '学海无涯',
+              router: '/articles'
+            },
+            {
+              title: _this.article_info.category.title,
+              router: '/category/' + _this.article_info.category.title
+            },
+            {
+              title: _this.article_info.title
+            }
+          ]
+          document.title = _this.article_info.title + ' - ' + process.env.VUE_APP_SITE_TITLE
+          _this.showArticle = true
+        } else {
+          _this.show = true
         }
-        let data = {
-          content: _this.$refs.wangEditor.getText()
-        };
-        let headers = {
-          'Authorization' : _this.$cookie.get('token')
-        };
-        _this.api.commentPost(_this.article_info.token, {}, headers, data).then((res) => {
-          if (res.code) {
-            _this.article_info.comments.push(res.data);
-          } else {
-            _this.$layer.msg(res.message || '系统繁忙');
-          }
-        }).catch((error) => {
-          console.log(error);
-        })
-      },
-      showReplay(item) {
-        let _this = this;
-        if (item.token === _this.reply.parent) {
+      }).catch((error) => {
+        console.log(error)
+      })
+    },
+    getRecommendPostList() {
+      const _this = this
+      _this.api.getRecommendPostList().then((res) => {
+        if (res.code) {
+          _this.recommends = res.data
+        }
+      }).catch((error) => {
+        console.log(error)
+      })
+    },
+    getHotPostList() {
+      const _this = this
+      _this.api.getHotPostList().then((res) => {
+        if (res.code) {
+          _this.hots = res.data
+        }
+      }).catch((error) => {
+        console.log(error)
+      })
+    },
+    comment() {
+      const _this = this
+      if (!_this.$store.state.login) {
+        _this.$layer.msg('请先登录')
+        return false
+      }
+      const data = {
+        content: _this.$refs.wangEditor.getText()
+      }
+      const headers = {
+        'Authorization': _this.$cookie.get('token')
+      }
+      _this.api.commentPost(_this.article_info.token, {}, headers, data).then((res) => {
+        if (res.code) {
+          _this.article_info.comments.push(res.data)
+        } else {
+          _this.$layer.msg(res.message || '系统繁忙')
+        }
+      }).catch((error) => {
+        console.log(error)
+      })
+    },
+    showReplay(item) {
+      const _this = this
+      if (item.token === _this.reply.parent) {
+        _this.reply = {}
+        return
+      }
+      _this.reply = {
+        parent: item.token,
+        root: item.root,
+        content: _this.reply.content
+      }
+      _this.replyPlaceholder = `回复【${item.user.nickname}】`
+    },
+    replayComment() {
+      const _this = this
+      if (!_this.$store.state.login) {
+        _this.$layer.msg('请先登录')
+        return false
+      }
+      const data = {
+        parent: _this.reply.parent,
+        content: _this.reply.content
+      }
+      const headers = {
+        'Authorization': _this.$cookie.get('token')
+      }
+      _this.api.replayComment(_this.reply.parent, {}, headers, data).then((res) => {
+        if (res.code) {
+          _this.fetchData()
           _this.reply = {}
-          return;
+        } else {
+          _this.$layer.msg(res.message || '系统繁忙')
         }
-        _this.reply = {
-          parent: item.token,
-          root: item.root,
-          content: _this.reply.content,
-        }
-        _this.replyPlaceholder = `回复【${item.user.nickname}】`;
-      },
-      replayComment() {
-        let _this = this;
-        if (!_this.$store.state.login) {
-          _this.$layer.msg('请先登录');
-          return false;
-        }
-        let data = {
-          parent: _this.reply.parent,
-          content: _this.reply.content
-        };
-        let headers = {
-          'Authorization' : _this.$cookie.get('token')
-        };
-        _this.api.replayComment(_this.reply.parent, {}, headers, data).then((res) => {
-          if (res.code) {
-            _this.fetchData()
-            _this.reply = {}
-          } else {
-            _this.$layer.msg(res.message || '系统繁忙');
-          }
-        }).catch((error) => {
-          console.log(error);
-        })
-      },
-      share() {
+      }).catch((error) => {
+        console.log(error)
+      })
+    },
+    share() {
 
-      },
-      praise() {
-        let _this = this;
-        let headers = {
-          'Authorization' : _this.$cookie.get('token')
-        };
-        if (!_this.$store.state.login) {
-          _this.$layer.msg('请先登录');
-          return false;
-        }
-        _this.api.praisePost(_this.article_info.token, {}, headers).then((res) => {
-          if (res.code) {
-            _this.article_info.praises_count++;
-          } else {
-            _this.$layer.msg(res.message);
-          }
-        }).catch((error) => {
-          console.log(error);
-        })
+    },
+    praise() {
+      const _this = this
+      const headers = {
+        'Authorization': _this.$cookie.get('token')
       }
-    },
-    mounted() {
-      let _this = this;
-      _this.fetchData()
-      _this.getRecommendPostList()
-      _this.getHotPostList()
-    },
-    watch: {
-      $route: 'fetchData'
+      if (!_this.$store.state.login) {
+        _this.$layer.msg('请先登录')
+        return false
+      }
+      _this.api.praisePost(_this.article_info.token, {}, headers).then((res) => {
+        if (res.code) {
+          _this.article_info.praises_count++
+        } else {
+          _this.$layer.msg(res.message)
+        }
+      }).catch((error) => {
+        console.log(error)
+      })
     }
   }
+}
 </script>
 <style scoped lang="stylus">
     @import "~vue-markdown-editor-orh/dist/css/index.css"

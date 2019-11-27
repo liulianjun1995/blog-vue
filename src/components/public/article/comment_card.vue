@@ -1,65 +1,63 @@
 <template>
-    <div class="comment-card" v-scroll-reveal.reset>
-        <p class="comment-card-title">
-            <i class="iconfont" :class="icon"></i>
-            {{ title }}
-        </p>
-        <ul class="comment-card-list">
-            <li v-for="item in comments">
-                <el-tooltip class="item" effect="dark" :content="'来自【'+ item.user.nickname+ '】的评论'" placement="left">
-                    <div class="user-avatar">
-                        <img :src="item.user.avatar" alt="">
-                    </div>
-                </el-tooltip>
-                <router-link :to="'/article/' + item.post + '#comment-' + item.token">
-                    <div class="comment-content" title="点击查看" v-html="item.content">
-
-                    </div>
-                </router-link>
-            </li>
-        </ul>
-    </div>
+  <div v-scroll-reveal.reset class="comment-card">
+    <p class="comment-card-title">
+      <i class="iconfont" :class="icon" />
+      {{ title }}
+    </p>
+    <ul class="comment-card-list">
+      <li v-for="item in comments">
+        <el-tooltip class="item" effect="dark" :content="'来自【'+ item.user.nickname+ '】的评论'" placement="left">
+          <div class="user-avatar">
+            <img :src="item.user.avatar" alt="">
+          </div>
+        </el-tooltip>
+        <router-link :to="'/article/' + item.post + '#comment-' + item.token">
+          <div class="comment-content" title="点击查看" v-html="item.content" />
+        </router-link>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
-  export default {
-    name: "comment_card",
-    props: {
-      icon: {
-        type: String,
-        required: true
+export default {
+  name: 'CommentCard',
+  props: {
+    icon: {
+      type: String,
+      required: true
+    },
+    title: {
+      type: String,
+      required: true
+    }
+  },
+  data() {
+    return {
+      user: {
+        src: require('@/assets/img/avatar.jpg'),
+        nickname: '榴莲君'
       },
-      title: {
-        type: String,
-        required: true
-      }
-    },
-    data() {
-      return {
-        user: {
-          src: require('@/assets/img/avatar.jpg'),
-          nickname: '榴莲君'
-        },
-        comments: {}
-      }
-    },
-    methods: {
-      fetchData() {
-        let _this = this;
-        _this.api.getCommentList().then((res) => {
-          if (res.code) {
-            _this.comments = res.data;
-          }
-        }).catch((error) => {
-          console.log(error);
-        })
-      }
-    },
-    mounted() {
-      let _this = this;
-      _this.fetchData()
+      comments: {}
+    }
+  },
+  mounted() {
+    const _this = this
+    _this.fetchData()
+  },
+  methods: {
+    fetchData() {
+      const _this = this
+      _this.api.getCommentList().then((res) => {
+        if (res.code) {
+          _this.comments = res.data
+        }
+      }).catch((error) => {
+        console.log(error)
+      })
     }
   }
+}
 </script>
 
 <style scoped lang="stylus">

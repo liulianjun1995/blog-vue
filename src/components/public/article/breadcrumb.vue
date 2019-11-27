@@ -1,24 +1,24 @@
 <template>
-    <div class="breadcrumb">
-        <el-breadcrumb separator-class="el-icon-arrow-right">
-            <i class="icon el-icon-location-outline"></i>
-            <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-            <template v-for="item in breadcrumb">
-                <el-breadcrumb-item :to="item.router">{{item.title}}</el-breadcrumb-item>
-            </template>
-        </el-breadcrumb>
-    </div>
+  <div class="breadcrumb">
+    <el-breadcrumb separator-class="el-icon-arrow-right">
+      <i class="icon el-icon-location-outline" />
+      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+      <template v-for="item in breadcrumb">
+        <el-breadcrumb-item :to="item.router">{{ item.title }}</el-breadcrumb-item>
+      </template>
+    </el-breadcrumb>
+  </div>
 </template>
 
 <script>
-  export default {
-    name: "breadcrumb",
-    props: {
-      breadcrumb: {
-        type: Array
-      }
+export default {
+  name: 'Breadcrumb',
+  props: {
+    breadcrumb: {
+      type: Array
     }
   }
+}
 </script>
 
 <style scoped lang="stylus">

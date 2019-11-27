@@ -1,47 +1,47 @@
 <template>
-    <div class="backTop" v-if="show" title="返回顶部" @click="goTop">
-        <i class="iconfont el-icon-ali-fanhuidingbu"></i>
-    </div>
+  <div v-if="show" class="backTop" title="返回顶部" @click="goTop">
+    <i class="iconfont el-icon-ali-fanhuidingbu" />
+  </div>
 </template>
 
 <script>
-  export default {
-    name: "backTop",
-    data() {
-      return {
-        scrollTop: 0,
-        show: false,
-      }
+export default {
+  name: 'BackTop',
+  data() {
+    return {
+      scrollTop: 0,
+      show: false
+    }
+  },
+  watch: {
+    // '$route': {
+    //   handler: 'goTop',
+    // }
+  },
+  mounted() {
+    window.addEventListener('scroll', this.scrollToTop)
+  },
+  destroyed() {
+    window.removeEventListener('scroll', this.scrollToTop)
+  },
+  methods: {
+    goTop() {
+      const that = this
+      const timer = setInterval(() => {
+        const ispeed = Math.floor(-that.scrollTop / 5)
+        document.documentElement.scrollTop = document.body.scrollTop = that.scrollTop + ispeed
+        if (that.scrollTop === 0) {
+          clearInterval(timer)
+        }
+      })
     },
-    methods: {
-      goTop() {
-        const that = this
-        let timer = setInterval(() => {
-          let ispeed = Math.floor(-that.scrollTop / 5)
-          document.documentElement.scrollTop = document.body.scrollTop = that.scrollTop + ispeed
-          if (that.scrollTop === 0) {
-            clearInterval(timer)
-          }
-        })
-      },
-      scrollToTop() {
-        let _this = this
-        _this.scrollTop  = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-        _this.show = _this.scrollTop > 60;
-      }
-    },
-    mounted() {
-      window.addEventListener('scroll', this.scrollToTop)
-    },
-    destroyed() {
-      window.removeEventListener('scroll', this.scrollToTop)
-    },
-    watch: {
-      // '$route': {
-      //   handler: 'goTop',
-      // }
+    scrollToTop() {
+      const _this = this
+      _this.scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+      _this.show = _this.scrollTop > 60
     }
   }
+}
 </script>
 
 <style scoped lang="stylus">

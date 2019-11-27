@@ -1,43 +1,43 @@
 <template>
-    <el-pagination
-            background
-            layout="prev, pager, next"
-            @current-change="handleCurrentChange"
-            hide-on-single-page
-            :current-page="currentPage"
-            :page-size="per_page"
-            :total="total">
-    </el-pagination>
+  <el-pagination
+    background
+    layout="prev, pager, next"
+    hide-on-single-page
+    :current-page="currentPage"
+    :page-size="per_page"
+    :total="total"
+    @current-change="handleCurrentChange"
+  />
 </template>
 
 <script>
-  export default {
-    name: "pagination",
-    props: {
-      total: {
-        type: Number|String,
-        required: true
-      },
-      currentPage: {
-        type: Number|String,
-        required: true
-      },
-      per_page: {
-        type: Number|String,
-        required: true
-      },
+export default {
+  name: 'Pagination',
+  props: {
+    total: {
+      type: Number | String,
+      required: true
     },
-    data() {
-      return {
+    currentPage: {
+      type: Number | String,
+      required: true
+    },
+    perPage: {
+      type: Number | String,
+      required: true
+    }
+  },
+  data() {
+    return {
 
-      }
-    },
-    methods: {
-      handleCurrentChange(val) {
-        this.$router.push(this.$route.path + '?page=' + val)
-      },
-    },
+    }
+  },
+  methods: {
+    handleCurrentChange(val) {
+      this.$router.push(this.$route.path + '?page=' + val)
+    }
   }
+}
 </script>
 
 <style scoped lang="stylus">

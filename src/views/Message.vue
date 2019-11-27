@@ -1,76 +1,74 @@
 <template>
-    <div class="message">
-        <el-row>
-            <el-col :span="24">
-                <breadcrumb :breadcrumb="breadcrumb"/>
-            </el-col>
-        </el-row>
-        <el-row :gutter="10">
-            <el-col :xs="24" :sm="24" :md="16" :lg="16" :xl="16">
-                <div class="tip">
-                    <div class="tip-figure">
-                        <i class="iconfont el-icon-ali-message1"></i>
-                    </div>
-                    <p class="tip-title">留言板</p>
-                    <p class="tip-introduce">可留言、可吐槽、可提问。欢迎灌水，杜绝广告！</p>
-                </div>
-                <div class="editor-box">
-                    <wangEditor ref="wangEditor" :disable="disable" :options="editor_options"/>
-                    <el-button size="small" type="primary" >提交评论</el-button>
-                </div>
-            </el-col>
-            <el-col style="padding: unset" :xs="24" :sm="24" :md="8" :lg="8" :xl="8">
-
-            </el-col>
-        </el-row>
-    </div>
+  <div class="message">
+    <el-row>
+      <el-col :span="24">
+        <breadcrumb :breadcrumb="breadcrumb" />
+      </el-col>
+    </el-row>
+    <el-row :gutter="10">
+      <el-col :xs="24" :sm="24" :md="16" :lg="16" :xl="16">
+        <div class="tip">
+          <div class="tip-figure">
+            <i class="iconfont el-icon-ali-message1" />
+          </div>
+          <p class="tip-title">留言板</p>
+          <p class="tip-introduce">可留言、可吐槽、可提问。欢迎灌水，杜绝广告！</p>
+        </div>
+        <div class="editor-box">
+          <wangEditor ref="wangEditor" :disable="disable" :options="editor_options" />
+          <el-button size="small" type="primary">提交评论</el-button>
+        </div>
+      </el-col>
+      <el-col style="padding: unset" :xs="24" :sm="24" :md="8" :lg="8" :xl="8" />
+    </el-row>
+  </div>
 </template>
 
 <script>
-  import breadcrumb from "../components/public/article/breadcrumb";
-  import wangEditor from "../components/public/wangEditor";
-  import emotions from "../config/emotions";
+import breadcrumb from '../components/public/article/breadcrumb'
+import wangEditor from '../components/public/wangEditor'
+import emotions from '../config/emotions'
 
-  export default {
-    name: "Message",
-    components: {
-      breadcrumb,
-      wangEditor
-    },
-    data() {
-      return {
-        breadcrumb: [],
-        editor_options: {
-          menus: [
-            'bold',  // 粗体
-            'italic',  // 斜体
-            'underline',  // 下划线
-            'redo',  // 重复
-            'undo',
-            // 一键清空编辑器
-            'clearAll',
-            // 插入带类名的代码
-            'insertCode',
-            'emoticon',
-            'justify',
-            'link',
-          ],
-          pasteFilterStyle: true,  // 打开/关闭粘贴样式的过滤,
-          emotions: emotions
-        },
-        disable: false
-      }
-    },
-    mounted() {
-      let _this = this;
-      _this.breadcrumb = [
-        {
-          title: '留言板',
-          router: '/message'
-        },
-      ]
+export default {
+  name: 'Message',
+  components: {
+    breadcrumb,
+    wangEditor
+  },
+  data() {
+    return {
+      breadcrumb: [],
+      editor_options: {
+        menus: [
+          'bold', // 粗体
+          'italic', // 斜体
+          'underline', // 下划线
+          'redo', // 重复
+          'undo',
+          // 一键清空编辑器
+          'clearAll',
+          // 插入带类名的代码
+          'insertCode',
+          'emoticon',
+          'justify',
+          'link'
+        ],
+        pasteFilterStyle: true, // 打开/关闭粘贴样式的过滤,
+        emotions: emotions
+      },
+      disable: false
     }
+  },
+  mounted() {
+    const _this = this
+    _this.breadcrumb = [
+      {
+        title: '留言板',
+        router: '/message'
+      }
+    ]
   }
+}
 </script>
 
 <style scoped lang="stylus">

@@ -1,39 +1,39 @@
 <template>
-    <div class="link_card"  v-scroll-reveal.reset>
-        <p class="card-title">
-            <i class="iconfont el-icon-ali-link"></i>
-            友情链接
-        </p>
-        <ul class="link_list">
-            <li v-for="item in blogrolls">
-                <a target="_blank" :href="item.link" :title="item.title">{{item.title}}</a>
-            </li>
-        </ul>
-    </div>
+  <div v-scroll-reveal.reset class="link_card">
+    <p class="card-title">
+      <i class="iconfont el-icon-ali-link" />
+      友情链接
+    </p>
+    <ul class="link_list">
+      <li v-for="item in blogrolls">
+        <a target="_blank" :href="item.link" :title="item.title">{{ item.title }}</a>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
-  export default {
-    name: "link_card",
-    data() {
-      return {
-        blogrolls: [],
-      }
-    },
-    methods: {
-      fetchData() {
-        let _this = this;
-        _this.api.getBlogrollList().then((res) => {
-          if (res.code) {
-            _this.blogrolls = res.data;
-          }
-        })
-      }
-    },
-    mounted() {
-      this.fetchData()
+export default {
+  name: 'LinkCard',
+  data() {
+    return {
+      blogrolls: []
+    }
+  },
+  mounted() {
+    this.fetchData()
+  },
+  methods: {
+    fetchData() {
+      const _this = this
+      _this.api.getBlogrollList().then((res) => {
+        if (res.code) {
+          _this.blogrolls = res.data
+        }
+      })
     }
   }
+}
 </script>
 
 <style scoped lang="stylus">

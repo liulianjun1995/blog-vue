@@ -1,5 +1,5 @@
-const path = require('path');
-function resolve (dir) {
+const path = require('path')
+function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
@@ -26,21 +26,21 @@ module.exports = {
           target: 'https://www.liulianjun.top/api',
           /* 允许跨域 */
           changeOrigin: true,
-          pathRewrite:{
-            '^/api':''
+          pathRewrite: {
+            '^/api': ''
           }
         },
         '/weather': {
-            /* 目标代理服务器地址 */
-            target: 'https://free-api.heweather.net',
-            /* 允许跨域 */
-            changeOrigin: true,
-            pathRewrite:{
-              '^/weather':''
-            }
-          },
+          /* 目标代理服务器地址 */
+          target: 'https://free-api.heweather.net',
+          /* 允许跨域 */
+          changeOrigin: true,
+          pathRewrite: {
+            '^/weather': ''
+          }
+        }
       }
-    },
-  },
+    }
+  }
 
-};
+}
