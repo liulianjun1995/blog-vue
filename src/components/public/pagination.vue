@@ -4,7 +4,7 @@
     layout="prev, pager, next"
     hide-on-single-page
     :current-page="currentPage"
-    :page-size="per_page"
+    :page-size="perPage"
     :total="total"
     @current-change="handleCurrentChange"
   />

@@ -16,7 +16,7 @@
     </div>
     <div class="info-statistics">
       <div class="item">
-        <span>{{ article_count }}</span>
+        <span>{{ articleCount }}</span>
         <p>博文</p>
       </div>
       <div class="item">
@@ -24,7 +24,7 @@
         <p>细语</p>
       </div>
       <div class="item">
-        <span>{{ comment_count }}</span>
+        <span>{{ commentCount }}</span>
         <p>评论</p>
       </div>
       <div class="item">
@@ -43,10 +43,12 @@ export default {
   name: 'Info',
   props: {
     articleCount: {
-      type: Number
+      type: Number,
+      default: 0
     },
     commentCount: {
-      type: Number
+      type: Number,
+      default: 0
     }
   },
   data() {

@@ -17,7 +17,7 @@
               <article_box :articles="articles" :icon="'el-icon-ali-signal'" :title="'最新博文'" />
             </div>
           </template>
-          <pagination :current-page="current_page" :total="total" :per_page="per_page" />
+          <pagination :current-page="current_page" :total="total" :per-page="per_page" />
         </el-col>
         <el-col style="padding: unset" :xs="24" :sm="24" :md="8" :lg="8" :xl="8">
           <el-row>
@@ -51,12 +51,12 @@ import article_box from '@/components/public/article/article_box'
 import article_card from '@/components/public/article/article_card'
 import comment_card from '@/components/public/article/comment_card'
 import link_card from '@/components/public/link/link_card'
-import timeline_card from '../components/public/timeline/timeline_card'
 import carousel from '../components/public/carousel'
 import info from '@/components/public/info'
 import tips from '../components/public/tips'
-
 import pagination from '../components/public/pagination'
+
+import { postList, recommendPostList, topPostList, hotPostList } from '@/api/post'
 
 export default {
   name: 'Home',
@@ -66,7 +66,6 @@ export default {
     article_card,
     comment_card,
     link_card,
-    timeline_card,
     carousel,
     tips,
     pagination
@@ -101,7 +100,7 @@ export default {
       const params = {
         page: _this.$route.query.page || 1
       }
-      _this.api.getPostList(params).then((res) => {
+      postList(params).then((res) => {
         if (res.code) {
           _this.articles = res.data.data
           _this.current_page = res.data.current_page
@@ -115,7 +114,7 @@ export default {
     },
     getRecommendPostList() {
       const _this = this
-      _this.api.getRecommendPostList().then((res) => {
+      recommendPostList().then((res) => {
         if (res.code) {
           _this.recommends = res.data
         }
@@ -125,7 +124,7 @@ export default {
     },
     getTopPostList() {
       const _this = this
-      _this.api.getTopPostList().then((res) => {
+      topPostList().then((res) => {
         if (res.code) {
           _this.tops = res.data
         }
@@ -135,7 +134,7 @@ export default {
     },
     getHotPostList() {
       const _this = this
-      _this.api.getHotPostList().then((res) => {
+      hotPostList().then((res) => {
         if (res.code) {
           _this.hots = res.data
         }

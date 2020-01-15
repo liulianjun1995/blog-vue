@@ -1,14 +1,6 @@
 import axios from './index'
 // 本地代理
 const baseUrl = '/api'
-// switch (process.env.NODE_ENV) {
-//   case 'dev':
-//     break
-//   case 'pre':
-//     break
-//   case 'production':
-//     break
-// }
 
 export default {
   getCarousels(params, headers) {
