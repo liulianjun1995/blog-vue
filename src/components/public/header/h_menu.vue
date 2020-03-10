@@ -55,9 +55,7 @@
         let _this = this;
         _this.api.getCategoryList().then((res) => {
           _this.$store.state.menus = res.data
-        }).catch((error) => {
-          console.log(error);
-        })
+        }).catch(() => {})
       }
     },
     mounted() {

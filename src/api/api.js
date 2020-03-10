@@ -1,14 +1,14 @@
 import axios from "./index";
 // 本地代理
-let baseUrl = '/api'
-// switch (process.env.NODE_ENV) {
-//   case 'dev':
-//     break
-//   case 'pre':
-//     break
-//   case 'production':
-//     break
-// }
+let baseUrl = ''
+switch (process.env.NODE_ENV) {
+  case 'development':
+    baseUrl = 'http://blog.liulianjun.test/api'
+    break
+  case 'production':
+    baseUrl = '/api'
+    break
+}
 
 export default {
   getCarousels(params, headers) {

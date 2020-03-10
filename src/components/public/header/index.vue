@@ -111,7 +111,6 @@
       }
     },
     mounted() {
-      console.log(process.env);
       let _this = this;
       if (_this.$route.query.token) {
         _this.$cookie.set('token', _this.$route.query.token, { expires: 7 });

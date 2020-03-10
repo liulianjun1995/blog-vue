@@ -11,7 +11,7 @@
             <span>©</span>
             <span>2018 - 2019</span>
             <a href="/">liulianjun.top</a>
-            <a href="#">豫ICP备19018938号-1</a>
+            <a href="http://www.beian.miit.gov.cn" TARGET="_blank">豫ICP备19018938号-1</a>
         </p>
     </div>
 </template>

@@ -22,9 +22,7 @@
         let _this = this;
         _this.api.getCategoryList().then((res) => {
           _this.menus = res.data
-        }).catch((error) => {
-          console.log(error);
-        })
+        }).catch(() => {})
       }
     },
     mounted() {

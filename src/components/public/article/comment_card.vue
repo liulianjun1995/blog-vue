@@ -50,9 +50,7 @@
           if (res.code) {
             _this.comments = res.data;
           }
-        }).catch((error) => {
-          console.log(error);
-        })
+        }).catch(() => {})
       }
     },
     mounted() {
